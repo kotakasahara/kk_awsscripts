@@ -35,6 +35,8 @@ elif [ "${OS}" = "Ubuntu" ]; then
     apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     chgrp docker $(which docker)
     chmod g+s $(which docker)
+    systemctl enable docker.service
+    systemctl start docker.service
 
     ## kk 2024.01.25
     ## install nvidia-container-toolkit
@@ -46,9 +48,7 @@ elif [ "${OS}" = "Ubuntu" ]; then
     sudo apt-get install -y nvidia-container-toolkit
     ##
 
-    systemctl enable docker.service
-    systemctl start docker.service
-
+    systemctl restart docker.service
 else
         echo "Unsupported OS: ${OS}" && exit 1;
 fi
